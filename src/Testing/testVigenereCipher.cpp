@@ -5,11 +5,11 @@
 #include "VigenereCipher.hpp"
 
 TEST_CASE("Vigenere Cipher encryption", "[vigenere]") {
-  VigenereCipher cc{"hello"};
-  REQUIRE( cc.applyCipher("BOBISSOMESORTOFJUNIORCOMPLEXXENOPHONEONEZEROTHING", CipherMode::Encrypt) == "BOBISSOMESORTOFJUNIORCOMPLEXXENOPHONEONEZEROTHING");
+  VigenereCipher cc{"key"};
+  REQUIRE( cc.applyCipher("HELLOWORLD", CipherMode::Encrypt) == "RIJVSUYVJN");
 }
 
 TEST_CASE("Vigenere Cipher decryption", "[vigenere]") {
-  VigenereCipher cc{"hello"};
-  REQUIRE( cc.applyCipher("FHIQXLTLKLTLSUFNPQPKETFENIOLVSWLTFIAFTLAKOWATEQOKPPA", CipherMode::Decrypt) == "FHIQXLTLKLTLSUFNPQPKETFENIOLVSWLTFIAFTLAKOWATEQOKPPA");
+  VigenereCipher cc{"key"};
+  REQUIRE( cc.applyCipher("RIJVSUYVJN", CipherMode::Decrypt) == "HELLOWORLD");
 }

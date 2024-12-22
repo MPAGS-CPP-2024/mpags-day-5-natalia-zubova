@@ -2,10 +2,11 @@
 #define MPAGSCIPHER_VIGENERECIPHER_HPP
 
 #include "CipherMode.hpp"
+#include "CaesarCipher.hpp"
 
 #include <cstddef>
 #include <string>
-#include <vector>
+#include <map>
 
 class VigenereCipher {
   public:
@@ -36,6 +37,9 @@ class VigenereCipher {
   private:
     /// The cipher key
     std::string key_{""};
+
+    /// Lookup table
+    std::map<char,CaesarCipher> charLookup_;
 };
 
 #endif
