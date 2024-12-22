@@ -5,6 +5,7 @@
 #include "VigenereCipher.hpp"
 #include "ProcessCommandLine.hpp"
 #include "TransformChar.hpp"
+#include "CipherFactory.hpp"
 
 #include <cctype>
 #include <fstream>
@@ -92,23 +93,27 @@ int main(int argc, char* argv[])
 
     std::string outputText;
 
-    switch (settings.cipherType[0]) {
-        case CipherType::Caesar: {
-            CaesarCipher cipher{settings.cipherKey[0]};
-            outputText = cipher.applyCipher(inputText, settings.cipherMode);
-            break;
-        }
-        case CipherType::Playfair: {
-            PlayfairCipher cipher{settings.cipherKey[0]};
-            outputText = cipher.applyCipher(inputText, settings.cipherMode);
-            break;
-        }
-        case CipherType::Vigenere: {
-            VigenereCipher cipher{settings.cipherKey[0]};
-            outputText = cipher.applyCipher(inputText, settings.cipherMode);
-            break;
-        }
-    }
+    auto cipher = CipherFactory::createCipher(settings.cipherType[0], settings.cipherKey[0]);
+
+    outputText = cipher->applyCipher(inputText, settings.cipherMode);
+
+    // switch (settings.cipherType[0]) {
+    //     case CipherType::Caesar: {
+    //         CaesarCipher cipher{settings.cipherKey[0]};
+    //         outputText = cipher.applyCipher(inputText, settings.cipherMode);
+    //         break;
+    //     }
+    //     case CipherType::Playfair: {
+    //         PlayfairCipher cipher{settings.cipherKey[0]};
+    //         outputText = cipher.applyCipher(inputText, settings.cipherMode);
+    //         break;
+    //     }
+    //     case CipherType::Vigenere: {
+    //         VigenereCipher cipher{settings.cipherKey[0]};
+    //         outputText = cipher.applyCipher(inputText, settings.cipherMode);
+    //         break;
+    //     }
+    // }
 
     // Output the encrypted/decrypted text to stdout/file
     if (!settings.outputFile.empty()) {
