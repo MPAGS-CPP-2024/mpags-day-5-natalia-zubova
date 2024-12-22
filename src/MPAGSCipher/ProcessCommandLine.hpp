@@ -31,6 +31,8 @@ struct ProgramSettings {
     std::vector<CipherType> cipherType;
     /// Flag indicating the mode in which the cipher should run (i.e. encrypt or decrypt)
     CipherMode cipherMode;
+    /// Number of ciphers to be used in multi-cipher mode
+    // int multiCipher;
 };
 
 /**

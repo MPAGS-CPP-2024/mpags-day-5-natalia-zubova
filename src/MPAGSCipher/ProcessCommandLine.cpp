@@ -11,7 +11,7 @@ bool processCommandLine(const std::vector<std::string>& cmdLineArgs,
     bool processStatus{true};
 
     // Default to expecting information about one cipher
-    const std::size_t nExpectedCiphers{1};
+    std::size_t nExpectedCiphers{1};
     settings.cipherType.reserve(nExpectedCiphers);
     settings.cipherKey.reserve(nExpectedCiphers);
 
@@ -88,12 +88,29 @@ bool processCommandLine(const std::vector<std::string>& cmdLineArgs,
                     settings.cipherType.push_back(CipherType::Caesar);
                 } else if (cmdLineArgs[i + 1] == "playfair") {
                     settings.cipherType.push_back(CipherType::Playfair);
+                } else if (cmdLineArgs[i + 1] == "vigenere") {
+                    settings.cipherType.push_back(CipherType::Vigenere);
                 } else {
                     std::cerr << "[error] unknown cipher '"
                               << cmdLineArgs[i + 1] << "'\n";
                     processStatus = false;
                     break;
                 }
+                ++i;
+            }
+        } else if (cmdLineArgs[i] == "--multi-cipher") {
+            // Handle multi-cipher option
+            // Next element is the number of ciphers to be used, unless --multi-cipher is the last argument
+            if (i == nCmdLineArgs - 1) {
+                std::cerr << "[error] --multi-cipher requires a positive integer argument"
+                          << std::endl;
+                // Set the flag to indicate the error and terminate the loop
+                processStatus = false;
+                break;
+            } else {
+                // Got the number of ciphers, so assign the value and advance past it
+                // settings.multiCipher = std::stoi(cmdLineArgs[i + 1]);
+                nExpectedCiphers = std::stoi(cmdLineArgs[i + 1]);
                 ++i;
             }
         } else {
